@@ -323,6 +323,9 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+// Inicia a animação
+animate();
+
 // Raycaster e vetor do mouse
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -347,13 +350,17 @@ window.addEventListener('mousemove', (event) => {
 
   // Restaurar a cor original de todos os ossos
   bones.forEach((bone) => {
-    bone.material.color.set(0x808080); // Cinza (cor padrão)
+    if (bone.material && bone.material.color) {
+      bone.material.color.set(0x808080); // Cinza (cor padrão)
+    }
   });
 
   // Alterar a cor do osso destacado
   if (intersects.length > 0) {
     const highlightedBone = intersects[0].object;
-    highlightedBone.material.color.set(0xff0000); // Vermelho
+    if (highlightedBone.material && highlightedBone.material.color) {
+      highlightedBone.material.color.set(0xff0000); // Vermelho
+    }
   }
 });
 
@@ -364,5 +371,3 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Inicia a animação
-animate();
